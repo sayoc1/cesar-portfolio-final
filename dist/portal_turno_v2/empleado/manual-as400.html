@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual AS400 - Banco Agrícola de Venezuela</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <style>
+        /* Animaciones de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body { animation: fadeIn 0.5s ease-out; }
+        .card { animation: fadeIn 0.6s ease-out; }
+        
+        /* Estilos específicos para el manual */
+        .manual-header-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out 0.1s both;
+        }
+
+        .manual-header-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .manual-icon-large {
+            width: 90px;
+            height: 90px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .manual-icon-large span {
+            color: white;
+            font-size: 56px;
+        }
+
+        .manual-header-content {
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .manual-header-content h2 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .manual-header-content p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+        }
+
+        .info-alert {
+            background: var(--primary-bg);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: fadeIn 0.5s ease-out 0.2s both;
+        }
+
+        .info-alert span:first-child {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .pdf-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-out 0.3s both;
+        }
+
+        .pdf-viewer {
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            height: 600px;
+            overflow: hidden;
+            border: 2px solid var(--gray-200);
+        }
+
+        .pdf-viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .download-btn-large {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px rgba(0, 114, 63, 0.3);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            min-width: 280px;
+            animation: fadeIn 0.5s ease-out 0.4s both;
+        }
+
+        .download-btn-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 114, 63, 0.4);
+        }
+
+        .download-section {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .manual-header-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            .manual-header-content h2 { font-size: 1.5rem; }
+            .pdf-viewer { height: 400px; }
+            .download-btn-large { padding: 1rem 2rem; min-width: auto; width: 100%; }
+        }
+
+        /* Estilos para móvil */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                top: 64px;
+                left: -280px;
+                width: 268px;
+                height: calc(100vh - 64px);
+                box-shadow: var(--shadow-xl);
+                z-index: 90;
+                transition: left 0.3s ease;
+            }
+            .sidebar.sidebar-open { left: 0; }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.45);
+                z-index: 89;
+                backdrop-filter: blur(2px);
+                transition: opacity 0.3s ease;
+            }
+            .sidebar-overlay.show { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: linear-gradient(135deg, #004d2b 0%, #00723f 100%); height: 64px;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <button class="nav-hamburger" id="menuToggle" style="background: transparent; border: none; color: white; cursor: pointer; padding: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 28px;">menu</span>
+            </button>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="/portal_turno_v2/assets/img/logo-banco.png" alt="BAV" style="height: 40px; width: auto; border-radius: 8px; background: white; padding: 3px;" 
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IndoaXRlIiByeD0iOCIvPjx0ZXh0IHg9IjUiIHk9IjI4IiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZpbGw9IiMwMDcyM2YiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSJib2xkIj5CQVY8L3RleHQ+PC9zdmc+';">
+                <span style="color: white; font-weight: 700; font-size: 1.1rem;">Banco Agrícola de Venezuela</span>
+            </div>
+        </div>
+        <div class="nav-user" id="navUser"></div>
+    </nav>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-label">PRINCIPAL</div>
+                <a class="sidebar-link" href="dashboard.html"><span class="material-symbols-outlined">home</span> Mi Panel</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">MI TURNO</div>
+                <a class="sidebar-link" href="bitacora.html"><span class="material-symbols-outlined">edit_note</span> Bitácora</a>
+                <a class="sidebar-link" href="novedad.html"><span class="material-symbols-outlined">warning</span> Novedades</a>
+                <a class="sidebar-link" href="recorrido.html"><span class="material-symbols-outlined">route</span> Hoja de Recorrido</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">CONSULTAS</div>
+                <a class="sidebar-link" href="horarios.html"><span class="material-symbols-outlined">calendar_month</span> Mis Horarios</a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">AYUDA</div>
+                <a class="sidebar-link active" href="manual-as400.html"><span class="material-symbols-outlined">menu_book</span> Manual AS400</a>
+            </div>
+        </aside>
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Guía descargable AS400</h1>
+            </div>
+
+            <!-- Header con icono de libro -->
+            <div class="manual-header-card">
+                <div class="manual-icon-large">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                </div>
+                <div class="manual-header-content">
+                    <h2>Manual de Usuario AS400</h2>
+                    <p >Guía de referencia para el sistema AS400 </p>
+                    <p>Consulta aqui si tienes dudas sobre el sistema AS400</p>
+                </div>
+            </div>
+
+            <!-- Alerta informativa -->
+            <div class="info-alert">
+                <span class="material-symbols-outlined">info</span>
+                <p>Puedes visualizar el documento directamente o descargarlo para consulta offline.</p>
+            </div>
+
+            <!-- Visor PDF con TU MANUAL -->
+            <div class="pdf-card">
+                <div class="pdf-viewer">
+                    <iframe src="../assets/docs/manual-as400.pdf" 
+                            title="Manual AS400"
+                            allowfullscreen
+                            webkitallowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Botón de descarga con TU MANUAL -->
+            <div class="download-section">
+                <a href="../assets/docs/manual-as400.pdf" 
+                   download="Manual_AS400_BAV.pdf" 
+                   class="download-btn-large">
+                    <span class="material-symbols-outlined">download</span>
+                    Descargar Manual PDF
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script>
+        const user = requireAuth('empleado');
+        if (user) {
+            const navUser = document.getElementById('navUser');
+            if (navUser) {
+                const initial = (user.nombre || "U")[0].toUpperCase();
+                navUser.innerHTML = `
+                    <div class="nav-avatar" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.2);color:white;display:flex;align-items:center;justify-content:center;">${initial}</div>
+                    <span class="nav-username" style="color:white;">${user.nombre}</span>
+                    <span class="nav-role badge badge-success">${user.rol}</span>
+                    <button class="btn btn-sm btn-outline" onclick="Auth.logout()" style="background:rgba(255,255,255,0.1);color:white;">
+                        <span class="material-symbols-outlined">logout</span>
+                    </button>
+                `;
+            }
+
+            // Sidebar móvil
+            const toggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            toggle?.addEventListener('click', () => {
+                sidebar?.classList.toggle('sidebar-open');
+                overlay?.classList.toggle('show');
+                document.body.style.overflow = sidebar?.classList.contains('sidebar-open') ? 'hidden' : '';
+            });
+            
+            overlay?.addEventListener('click', () => {
+                sidebar?.classList.remove('sidebar-open');
+                overlay?.classList.remove('show');
+                document.body.style.overflow = '';
+            });
+        }
+    </script>
+</body>
+</html>

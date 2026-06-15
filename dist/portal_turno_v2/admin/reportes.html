@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Portal de Turnos</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar con logo fijo y botón hamburguesa -->
+    <nav class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: linear-gradient(135deg, #004d2b 0%, #00723f 100%); height: 64px;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <button class="nav-hamburger" id="sidebarToggle" style="background: transparent; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 28px;">menu</span>
+            </button>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="/portal_turno_v2/assets/img/logo-banco.png" alt="BAV" style="height: 40px; width: auto; border-radius: 8px; background: white; padding: 3px;" 
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IndoaXRlIiByeD0iOCIvPjx0ZXh0IHg9IjUiIHk9IjI4IiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZpbGw9IiMwMDcyM2YiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSJib2xkIj5CQVY8L3RleHQ+PC9zdmc+';">
+                <span style="color: white; font-weight: 700; font-size: 1.1rem;">Banco Agrícola de Venezuela</span>
+            </div>
+        </div>
+        <div class="nav-user" id="navUser" style="display: flex; align-items: center; gap: 1rem;"></div>
+    </nav>
+
+    <div class="layout">
+        <!-- ========== SIDEBAR CON ENLACE A DETALLE EMPLEADO ========== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-label">PRINCIPAL</div>
+                <a class="sidebar-link" href="dashboard.html">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-label">GESTIÓN</div>
+                <a class="sidebar-link" href="usuarios.html">
+                    <span class="material-symbols-outlined">group</span>
+                    <span>Usuarios</span>
+                </a>
+                <a class="sidebar-link" href="horarios.html">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    <span>Horarios</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-label">REPORTES</div>
+                <a class="sidebar-link" href="turnos.html">
+                    <span class="material-symbols-outlined">schedule</span>
+                    <span>Historial de Turnos</span>
+                </a>
+                <a class="sidebar-link" href="empleado-detalle.html">
+                    <span class="material-symbols-outlined">person_search</span>
+                    <span>Detalle Empleado</span>
+                </a>
+                <a class="sidebar-link active" href="reportes.html">
+                    <span class="material-symbols-outlined">trending_up</span>
+                    <span>Reportes</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Overlay para el sidebar móvil -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Reportes</h1>
+                <p class="page-subtitle">Resumen de actividad por empleado</p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="material-symbols-outlined"
+                            style="font-size:20px;vertical-align:middle">date_range</span> Periodo de consulta</h3>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Fecha desde</label>
+                        <input type="date" class="form-input" id="filtroDesde">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Fecha hasta</label>
+                        <input type="date" class="form-input" id="filtroHasta">
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button class="btn btn-primary" onclick="loadReporte()"><span
+                                class="material-symbols-outlined" style="font-size:18px">trending_up</span> Generar
+                            Reporte</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla detallada -->
+            <div class="card" id="reportCard" style="display:none;">
+                <div class="card-header">
+                    <h3 class="card-title"><span class="material-symbols-outlined"
+                            style="font-size:20px;vertical-align:middle">analytics</span> Detalle por Empleado</h3>
+                    <button class="btn btn-sm btn-secondary" onclick="exportTable()"><span
+                            class="material-symbols-outlined" style="font-size:16px">download</span>
+                        Exportar</button>
+                </div>
+                <div class="table-wrapper" id="reporteTable"></div>
+            </div>
+
+            <!-- Estado vacío -->
+            <div class="card" id="emptyState">
+                <div class="empty-state">
+                    <div class="empty-icon"><span class="material-symbols-outlined"
+                            style="font-size:48px">trending_up</span></div>
+                    <p>Seleccione un rango de fechas y presione <strong>Generar Reporte</strong></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script>
+        // ============================================
+        // FUNCIONES PARA EL SIDEBAR MÓVIL
+        // ============================================
+        function toggleSidebar(event) {
+            if (event) event.preventDefault();
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('sidebarOverlay');
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    document.getElementById('sidebar')?.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('sidebar')?.classList.remove('active');
+                    document.getElementById('sidebarOverlay')?.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        const user = requireAuth('admin');
+        if (user) {
+            const navUser = document.getElementById('navUser');
+            if (navUser) {
+                const initial = (user.nombre || "U")[0].toUpperCase();
+                navUser.innerHTML = `
+                    <div class="nav-avatar" style="width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; border: 1px solid rgba(255,255,255,0.25);">${initial}</div>
+                    <span class="nav-username" style="font-weight: 500; color: rgba(255,255,255,0.9); font-size: 0.875rem;">${user.nombre} ${user.apellido || ""}</span>
+                    <span class="nav-role badge badge-${user.rol === "admin" ? "primary" : "success"}" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2);">${user.rol}</span>
+                    <button class="btn btn-sm btn-outline" onclick="Auth.logout()" title="Cerrar sesión" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: white;">
+                        <span class="material-symbols-outlined" style="font-size:18px">logout</span>
+                    </button>
+                `;
+            }
+            
+            const now = new Date();
+            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+            document.getElementById('filtroDesde').value = firstDay.toISOString().split('T')[0];
+            document.getElementById('filtroHasta').value = now.toISOString().split('T')[0];
+        }
+
+        async function loadReporte() {
+            const desde = document.getElementById('filtroDesde').value;
+            const hasta = document.getElementById('filtroHasta').value;
+
+            if (!desde || !hasta) {
+                showToast('Seleccione ambas fechas', 'warning');
+                return;
+            }
+
+            showLoading('#reporteTable');
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('reportCard').style.display = 'block';
+
+            try {
+                const res = await Reportes.resumen({ fecha_desde: desde, fecha_hasta: hasta });
+                const empleados = res.data;
+
+                if (!Array.isArray(empleados) || empleados.length === 0) {
+                    document.getElementById('reporteTable').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><span class="material-symbols-outlined" style="font-size:48px">analytics</span></div>
+                        <p>No hay datos para el periodo seleccionado</p>
+                    </div>`;
+                    return;
+                }
+
+                const rows = empleados.map(e => `
+                <tr>
+                    <td><strong>${e.nombre} ${e.apellido}</strong></td>
+                    <td class="text-center">${e.total_turnos || 0}</td>
+                    <td class="text-center">${parseFloat(e.total_horas || 0).toFixed(1)}h</td>
+                    <td class="text-center">${e.total_novedades || 0}</td>
+                </tr>
+            `).join('');
+
+                document.getElementById('reporteTable').innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th class="text-center">Turnos</th>
+                            <th class="text-center">Horas</th>
+                            <th class="text-center">Novedades</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>`;
+            } catch (error) {
+                showToast(error.message || 'Error al generar reporte', 'error');
+            }
+        }
+
+        function exportTable() {
+            const table = document.querySelector('#reporteTable table');
+            if (!table) return;
+
+            let csv = [];
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const cols = row.querySelectorAll('th, td');
+                const rowData = Array.from(cols).map(c => `"${c.textContent.trim()}"`);
+                csv.push(rowData.join(','));
+            });
+
+            const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `reporte_${document.getElementById('filtroDesde').value}_${document.getElementById('filtroHasta').value}.csv`;
+            link.click();
+            showToast('Reporte exportado como CSV');
+        }
+    </script>
+
+    <!-- CSS para el sidebar -->
+    <style>
+        .sidebar {
+            width: 300px !important;
+            min-width: 300px !important;
+            background: white;
+            border-right: 1px solid var(--gray-200);
+            padding: 1.5rem 0;
+            height: calc(100vh - 64px);
+            position: sticky;
+            top: 64px;
+            overflow-y: auto;
+            z-index: 90;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+            padding: 0 0.75rem;
+        }
+        
+        .sidebar-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray-400);
+            padding: 0 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .sidebar-link {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 12px 16px !important;
+            margin: 4px 0 !important;
+            border-radius: 10px !important;
+            color: var(--gray-700) !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            transition: all 0.2s ease !important;
+            border-left: 3px solid transparent !important;
+        }
+        
+        .sidebar-link .material-symbols-outlined {
+            font-size: 22px !important;
+            min-width: 28px !important;
+        }
+        
+        .sidebar-link.active {
+            background: var(--primary-bg) !important;
+            color: var(--primary) !important;
+            border-left-color: var(--primary) !important;
+        }
+        
+        .sidebar-link.active .material-symbols-outlined {
+            color: var(--primary) !important;
+        }
+        
+        .sidebar-link:hover {
+            background: var(--gray-100) !important;
+        }
+        
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: -300px;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+                padding-top: 70px;
+            }
+            .sidebar.active { left: 0; }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            .sidebar-overlay.active { display: block; }
+            .nav-hamburger { display: flex !important; }
+        }
+        
+        @media (min-width: 1025px) {
+            .nav-hamburger { display: none !important; }
+        }
+    </style>
+
+</body>
+
+</html>

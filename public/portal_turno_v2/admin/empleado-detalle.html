@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Empleado - Portal de Turnos</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet">
+    <style>
+        /* Estilos para tabs */
+        .tabs-container { margin-bottom: 1.5rem; }
+        .tabs-header {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius) var(--radius) 0 0;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -0.5rem;
+        }
+        .tab-btn:hover { color: var(--primary); background: var(--gray-100); }
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: var(--primary-bg);
+        }
+        .tab-btn .material-symbols-outlined { font-size: 20px; }
+        .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+        .tab-pane.active { display: block; }
+        
+        /* Selector de empleado */
+        .empleado-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .selector-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        .selector-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.375rem;
+        }
+        .selector-input {
+            width: 100%;
+            padding: 0.6875rem 0.875rem;
+            border: 1.5px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-size: 0.9375rem;
+            background: white;
+            color: var(--gray-800);
+        }
+        .selector-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 114, 63, 0.1);
+        }
+        
+        /* Cards de estadísticas */
+        .empleado-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-mini-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .stat-mini-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .stat-mini-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        .stat-mini-label {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+        
+        /* Filtro de fechas */
+        .filtro-fechas {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+        }
+        .filtro-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .filtro-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Estilos para los items de detalle */
+        .detail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .detail-list-item {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            margin-bottom: 0.75rem;
+            padding: 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            background: var(--gray-50);
+        }
+        .detail-list-item:hover { transform: translateX(5px); }
+        .detail-list-item.bitacora-item:hover { border-left-color: var(--info); }
+        .detail-list-item.novedad-item:hover { border-left-color: var(--warning); }
+        .detail-list-item.recorrido-item:hover { border-left-color: var(--success); }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .item-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .badge-info { background: var(--info-bg); color: var(--info); }
+        .badge-warning { background: var(--warning-bg); color: var(--warning); }
+        .badge-success { background: var(--success-bg); color: var(--success); }
+        
+        .item-time {
+            color: var(--gray-400);
+            font-size: 0.8rem;
+        }
+        .item-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+        .item-desc {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            padding-left: 0.5rem;
+            border-left: 2px solid var(--gray-200);
+            margin-top: 0.5rem;
+        }
+        
+        /* Para móvil */
+        @media (max-width: 768px) {
+            .empleado-selector { flex-direction: column; align-items: stretch; }
+            .tabs-header { flex-wrap: wrap; }
+            .tab-btn { flex: 1; padding: 0.5rem; font-size: 0.8125rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar con logo fijo -->
+    <nav class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: linear-gradient(135deg, #004d2b 0%, #00723f 100%); height: 64px;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <button class="nav-hamburger" id="sidebarToggle" style="background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; padding: 8px; border-radius: 8px;">
+                <span class="material-symbols-outlined" style="font-size: 28px;">menu</span>
+            </button>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="/portal_turno_v2/assets/img/logo-banco.png" alt="BAV" style="height: 40px; width: auto; border-radius: 8px; background: white; padding: 3px;" 
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IndoaXRlIiByeD0iOCIvPjx0ZXh0IHg9IjUiIHk9IjI4IiBmb250LWZhbWlseT0iSW50ZXIsIHNhbnMtc2VyaWYiIGZpbGw9IiMwMDcyM2YiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSJib2xkIj5CQVY8L3RleHQ+PC9zdmc+';">
+                <span style="color: white; font-weight: 700; font-size: 1.1rem;">Banco Agrícola de Venezuela</span>
+            </div>
+        </div>
+        <div class="nav-user" id="navUser" style="display: flex; align-items: center; gap: 1rem;"></div>
+    </nav>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-label">PRINCIPAL</div>
+                <a class="sidebar-link" href="dashboard.html">
+                    <span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">GESTIÓN</div>
+                <a class="sidebar-link" href="usuarios.html">
+                    <span class="material-symbols-outlined">group</span> Usuarios
+                </a>
+                <a class="sidebar-link" href="horarios.html">
+                    <span class="material-symbols-outlined">calendar_month</span> Horarios
+                </a>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-label">REPORTES</div>
+                <a class="sidebar-link" href="turnos.html">
+                    <span class="material-symbols-outlined">schedule</span> Historial de Turnos
+                </a>
+                <a class="sidebar-link active" href="empleado-detalle.html">
+                    <span class="material-symbols-outlined">person_search</span> Detalle Empleado
+                </a>
+                <a class="sidebar-link" href="reportes.html">
+                    <span class="material-symbols-outlined">trending_up</span> Reportes
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Overlay para el sidebar móvil -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Detalle del Empleado</h1>
+                <p class="page-subtitle">Consulta bitácoras, novedades y recorridos por empleado</p>
+            </div>
+
+            <!-- Selector de empleado -->
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <span class="material-symbols-outlined" style="font-size:20px; vertical-align:middle;">person</span>
+                        Seleccionar Empleado
+                    </h3>
+                </div>
+                <div class="empleado-selector">
+                    <div class="selector-group">
+                        <label class="selector-label">Empleado</label>
+                        <select class="selector-input" id="empleadoSelect">
+                            <option value="">Cargando empleados...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="cargarDetalleEmpleado()">
+                            <span class="material-symbols-outlined" style="font-size:18px;">search</span>
+                            Ver Detalle
+                        </button>
+                        <button class="btn btn-secondary" onclick="diagnosticarEmpleado()" style="background: var(--info); color: white;">
+                            <span class="material-symbols-outlined" style="font-size:18px;">bug_report</span>
+                            Diagnosticar
+                        </button>
+                        <button class="btn btn-warning" onclick="mostrarTodosLosDatos()" style="background: var(--warning); color: white;">
+                            <span class="material-symbols-outlined" style="font-size:18px;">calendar_month</span>
+                            Ver Todos
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información del empleado seleccionado -->
+            <div id="empleadoInfoContainer" style="display: none;">
+                <!-- Mini stats del empleado -->
+                <div class="empleado-stats" id="empleadoStats"></div>
+
+                <!-- Filtro de fechas -->
+                <div class="filtro-fechas">
+                    <div class="filtro-group">
+                        <label class="filtro-label">Fecha desde</label>
+                        <input type="date" class="selector-input" id="filtroDesde" value="2026-01-01">
+                    </div>
+                    <div class="filtro-group">
+                        <label class="filtro-label">Fecha hasta</label>
+                        <input type="date" class="selector-input" id="filtroHasta" value="2026-12-31">
+                    </div>
+                    <button class="btn btn-sm btn-secondary" onclick="limpiarFiltros()">
+                        <span class="material-symbols-outlined">clear</span> Limpiar
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" id="tabBitacoras" onclick="activarTab('bitacoras')">
+                            <span class="material-symbols-outlined">edit_note</span>
+                            Bitácoras
+                            <span class="badge badge-info" id="badgeBitacoras">0</span>
+                        </button>
+                        <button class="tab-btn" id="tabNovedades" onclick="activarTab('novedades')">
+                            <span class="material-symbols-outlined">warning</span>
+                            Novedades
+                            <span class="badge badge-warning" id="badgeNovedades">0</span>
+                        </button>
+                        <button class="tab-btn" id="tabRecorridos" onclick="activarTab('recorridos')">
+                            <span class="material-symbols-outlined">route</span>
+                            Recorridos
+                            <span class="badge badge-success" id="badgeRecorridos">0</span>
+                        </button>
+                    </div>
+
+                    <!-- Contenido de los tabs -->
+                    <div class="tab-pane active" id="paneBitacoras">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Bitácoras del Empleado</h3>
+                            </div>
+                            <div id="bitacorasList" class="detail-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="paneNovedades">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Novedades Reportadas</h3>
+                            </div>
+                            <div id="novedadesList" class="detail-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="paneRecorridos">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Puntos de Recorrido</h3>
+                            </div>
+                            <div id="recorridosList" class="detail-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estado vacío -->
+            <div class="card" id="emptyState">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <span class="material-symbols-outlined" style="font-size:48px;">person_search</span>
+                    </div>
+                    <p>Selecciona un empleado para ver su detalle</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script>
+        // ============================================
+        // VARIABLES GLOBALES
+        // ============================================
+        let empleados = [];
+        let empleadoSeleccionado = null;
+        let currentTab = 'bitacoras';
+
+        // ============================================
+        // FUNCIONES PARA EL SIDEBAR MÓVIL
+        // ============================================
+        function toggleSidebar(event) {
+            if (event) event.preventDefault();
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('sidebarOverlay');
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    document.getElementById('sidebar')?.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('sidebar')?.classList.remove('active');
+                    document.getElementById('sidebarOverlay')?.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        const user = requireAuth('admin');
+        if (user) {
+            const navUser = document.getElementById('navUser');
+            if (navUser) {
+                const initial = (user.nombre || "U")[0].toUpperCase();
+                navUser.innerHTML = `
+                    <div class="nav-avatar" style="width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; border: 1px solid rgba(255,255,255,0.25);">${initial}</div>
+                    <span class="nav-username" style="font-weight: 500; color: rgba(255,255,255,0.9); font-size: 0.875rem;">${user.nombre} ${user.apellido || ""}</span>
+                    <span class="nav-role badge badge-${user.rol === "admin" ? "primary" : "success"}" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2);">${user.rol}</span>
+                    <button class="btn btn-sm btn-outline" onclick="Auth.logout()" title="Cerrar sesión" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: white;">
+                        <span class="material-symbols-outlined" style="font-size:18px">logout</span>
+                    </button>
+                `;
+            }
+
+            // Configurar fechas por defecto (todo el año 2026)
+            document.getElementById('filtroDesde').value = '2026-01-01';
+            document.getElementById('filtroHasta').value = '2026-12-31';
+
+            // Cargar empleados
+            cargarEmpleados().then(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const empleadoId = urlParams.get('empleado');
+                if (empleadoId) {
+                    const select = document.getElementById('empleadoSelect');
+                    select.value = empleadoId;
+                    cargarDetalleEmpleado();
+                }
+            });
+        }
+
+        // ============================================
+        // FUNCIÓN PARA CARGAR EMPLEADOS
+        // ============================================
+        async function cargarEmpleados() {
+            try {
+                const res = await Usuarios.list(1, '', 100);
+                empleados = res.data?.usuarios?.filter(u => u.rol === 'empleado') || [];
+                
+                const select = document.getElementById('empleadoSelect');
+                select.innerHTML = '<option value="">Seleccione un empleado...</option>';
+                
+                empleados.forEach(e => {
+                    const opt = document.createElement('option');
+                    opt.value = e.id;
+                    opt.textContent = `${e.nombre} ${e.apellido} (${e.usuario})`;
+                    select.appendChild(opt);
+                });
+                
+                console.log('✅ Empleados cargados:', empleados);
+            } catch (error) {
+                console.error('Error cargando empleados:', error);
+                showToast('Error al cargar empleados', 'error');
+            }
+        }
+
+        // ============================================
+        // FUNCIÓN PARA VALIDAR FECHAS
+        // ============================================
+        function validarYCorregirFechas() {
+            const desdeInput = document.getElementById('filtroDesde');
+            const hastaInput = document.getElementById('filtroHasta');
+            
+            let desde = desdeInput.value;
+            let hasta = hastaInput.value;
+            
+            if (!desde || !hasta) return false;
+            
+            if (desde > hasta) {
+                console.warn('⚠️ Fechas invertidas, intercambiando...');
+                desdeInput.value = hasta;
+                hastaInput.value = desde;
+                showToast('Fechas corregidas automáticamente', 'info');
+                return true;
+            }
+            return false;
+        }
+
+        // ============================================
+        // FUNCIÓN PARA MOSTRAR TODOS LOS DATOS (SIN FILTRO DE FECHAS)
+        // ============================================
+        function mostrarTodosLosDatos() {
+            // Establecer fechas amplias para el año 2026
+            document.getElementById('filtroDesde').value = '2026-01-01';
+            document.getElementById('filtroHasta').value = '2026-12-31';
+            showToast('Mostrando datos del año 2026', 'info');
+            cargarDetalleEmpleado();
+        }
+
+        // ============================================
+        // FUNCIÓN PRINCIPAL PARA CARGAR DETALLE
+        // ============================================
+        async function cargarDetalleEmpleado() {
+            // Validar fechas primero
+            validarYCorregirFechas();
+            
+            const empleadoId = document.getElementById('empleadoSelect').value;
+            if (!empleadoId) {
+                showToast('Seleccione un empleado', 'warning');
+                return;
+            }
+
+            empleadoSeleccionado = empleados.find(e => e.id == empleadoId);
+            if (!empleadoSeleccionado) return;
+
+            document.getElementById('empleadoInfoContainer').style.display = 'block';
+            document.getElementById('emptyState').style.display = 'none';
+
+            const desde = document.getElementById('filtroDesde').value;
+            const hasta = document.getElementById('filtroHasta').value;
+
+            console.log('📅 Cargando datos para empleado', empleadoId, 'desde', desde, 'hasta', hasta);
+
+            try {
+                // Mostrar loading
+                document.getElementById('bitacorasList').innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando bitácoras...</p></div>';
+                document.getElementById('novedadesList').innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando novedades...</p></div>';
+                document.getElementById('recorridosList').innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando recorridos...</p></div>';
+
+                // Cargar todos los datos
+                const [bitacorasRes, novedadesRes, recorridosRes, turnosRes] = await Promise.all([
+                    Bitacoras.list(),
+                    Novedades.list(),
+                    Recorridos.list(),
+                    Turnos.list(1, { empleado: empleadoId, fecha_desde: desde, fecha_hasta: hasta })
+                ]);
+
+                console.log('📥 Bitácoras:', bitacorasRes);
+                console.log('📥 Novedades:', novedadesRes);
+                console.log('📥 Recorridos:', recorridosRes);
+                console.log('📥 Turnos:', turnosRes);
+
+                // ============================================
+                // EXTRAER ARRAYS DE DATOS
+                // ============================================
+                const bitacoras = extraerArray(bitacorasRes);
+                const novedades = extraerArray(novedadesRes);
+                const recorridos = extraerArray(recorridosRes);
+                const turnos = turnosRes.data?.turnos || [];
+
+                console.log('✅ Bitácoras extraídas:', bitacoras.length);
+                console.log('✅ Novedades extraídas:', novedades.length);
+                console.log('✅ Recorridos extraídos:', recorridos.length);
+
+                // ============================================
+                // FILTRAR POR EMPLEADO Y FECHAS
+                // ============================================
+                const bitacorasFiltradas = filtrarItems(bitacoras, empleadoId, desde, hasta);
+                const novedadesFiltradas = filtrarItems(novedades, empleadoId, desde, hasta);
+                const recorridosFiltrados = filtrarItems(recorridos, empleadoId, desde, hasta);
+
+                console.log('✅ Bitácoras filtradas:', bitacorasFiltradas.length);
+                console.log('✅ Novedades filtradas:', novedadesFiltradas.length);
+                console.log('✅ Recorridos filtrados:', recorridosFiltrados.length);
+
+                // Actualizar badges
+                document.getElementById('badgeBitacoras').textContent = bitacorasFiltradas.length;
+                document.getElementById('badgeNovedades').textContent = novedadesFiltradas.length;
+                document.getElementById('badgeRecorridos').textContent = recorridosFiltrados.length;
+
+                // Cargar estadísticas
+                document.getElementById('empleadoStats').innerHTML = `
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value">${turnos.length}</div>
+                        <div class="stat-mini-label">Turnos</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value">${bitacorasFiltradas.length}</div>
+                        <div class="stat-mini-label">Bitácoras</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value">${novedadesFiltradas.length}</div>
+                        <div class="stat-mini-label">Novedades</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value">${recorridosFiltrados.length}</div>
+                        <div class="stat-mini-label">Recorridos</div>
+                    </div>
+                `;
+
+                // FORZAR RENDERIZADO SEGÚN EL TAB ACTIVO
+                renderizarTabActual(bitacorasFiltradas, novedadesFiltradas, recorridosFiltrados);
+
+            } catch (error) {
+                console.error('❌ Error cargando detalle:', error);
+                showToast('Error al cargar información del empleado', 'error');
+            }
+        }
+
+        // ============================================
+        // FUNCIÓN PARA EXTRAER ARRAY DE LA RESPUESTA
+        // ============================================
+        function extraerArray(respuesta) {
+            if (!respuesta) return [];
+            
+            // Si la respuesta tiene data y es array
+            if (respuesta.data && Array.isArray(respuesta.data)) {
+                return respuesta.data;
+            }
+            
+            // Si la respuesta es directamente un array
+            if (Array.isArray(respuesta)) {
+                return respuesta;
+            }
+            
+            return [];
+        }
+
+        // ============================================
+        // FUNCIÓN PARA FILTRAR ITEMS
+        // ============================================
+        function filtrarItems(items, empleadoId, desde, hasta) {
+            if (!items || items.length === 0) return [];
+            
+            console.log('🔍 Filtrando', items.length, 'items para empleado', empleadoId);
+            
+            const fechaDesde = new Date(desde);
+            fechaDesde.setHours(0, 0, 0, 0);
+            
+            const fechaHasta = new Date(hasta);
+            fechaHasta.setHours(23, 59, 59, 999);
+            
+            const filtrados = items.filter(item => {
+                // Verificar ID del empleado
+                const idEmpleado = item.id_usuario || item.usuario_id;
+                if (!idEmpleado) return false;
+                
+                // Comparar IDs
+                if (parseInt(idEmpleado) !== parseInt(empleadoId)) return false;
+                
+                // Obtener fecha del item
+                const fechaItemStr = item.fecha || item.created_at;
+                if (!fechaItemStr) return false;
+                
+                const fechaItem = new Date(fechaItemStr);
+                if (isNaN(fechaItem.getTime())) return false;
+                
+                // Comparar fechas
+                return fechaItem >= fechaDesde && fechaItem <= fechaHasta;
+            });
+            
+            // Ordenar por fecha descendente
+            filtrados.sort((a, b) => {
+                const fechaA = new Date(a.fecha || a.created_at || '');
+                const fechaB = new Date(b.fecha || b.created_at || '');
+                return fechaB - fechaA;
+            });
+            
+            console.log('✅ Filtrados:', filtrados.length);
+            return filtrados;
+        }
+
+        // ============================================
+        // FUNCIÓN DE DIAGNÓSTICO
+        // ============================================
+        async function diagnosticarEmpleado() {
+            const empleadoId = document.getElementById('empleadoSelect').value;
+            if (!empleadoId) {
+                alert('Selecciona un empleado primero');
+                return;
+            }
+            
+            console.log('🔍 DIAGNÓSTICO para empleado ID:', empleadoId);
+            
+            try {
+                const [bitacorasRes, novedadesRes, recorridosRes] = await Promise.all([
+                    Bitacoras.list(),
+                    Novedades.list(),
+                    Recorridos.list()
+                ]);
+                
+                const bitacoras = extraerArray(bitacorasRes);
+                const novedades = extraerArray(novedadesRes);
+                const recorridos = extraerArray(recorridosRes);
+                
+                const bitacorasEmpleado = bitacoras.filter(b => {
+                    const id = b.id_usuario || b.usuario_id;
+                    return id && parseInt(id) === parseInt(empleadoId);
+                });
+                
+                const novedadesEmpleado = novedades.filter(n => {
+                    const id = n.id_usuario || n.usuario_id;
+                    return id && parseInt(id) === parseInt(empleadoId);
+                });
+                
+                const recorridosEmpleado = recorridos.filter(r => {
+                    const id = r.id_usuario || r.usuario_id;
+                    return id && parseInt(id) === parseInt(empleadoId);
+                });
+                
+                console.log('🎯 Para empleado', empleadoId, ':');
+                console.log('   Bitácoras:', bitacorasEmpleado);
+                console.log('   Novedades:', novedadesEmpleado);
+                console.log('   Recorridos:', recorridosEmpleado);
+                
+                alert(`Empleado ${empleadoSeleccionado?.nombre || empleadoId}\n\n` +
+                      `Bitácoras: ${bitacorasEmpleado.length}\n` +
+                      `Novedades: ${novedadesEmpleado.length}\n` +
+                      `Recorridos: ${recorridosEmpleado.length}\n\n` +
+                      `Revisa la consola (F12) para más detalles`);
+            } catch (error) {
+                console.error('❌ Error en diagnóstico:', error);
+            }
+        }
+
+        // ============================================
+        // FUNCIONES DE FORMATEO
+        // ============================================
+        function formatFechaHora(dateStr) {
+            if (!dateStr) return '—';
+            try {
+                const fecha = new Date(dateStr);
+                if (isNaN(fecha.getTime())) return dateStr;
+                
+                return fecha.toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function formatHora(dateStr) {
+            if (!dateStr) return '--:--';
+            try {
+                const fecha = new Date(dateStr);
+                if (isNaN(fecha.getTime())) return dateStr;
+                
+                return fecha.toLocaleTimeString('es-ES', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        // ============================================
+        // FUNCIÓN PARA RENDERIZAR SEGÚN TAB ACTIVO
+        // ============================================
+        function renderizarTabActual(bitacoras, novedades, recorridos) {
+            if (currentTab === 'bitacoras') {
+                renderizarBitacoras(bitacoras);
+            } else if (currentTab === 'novedades') {
+                renderizarNovedades(novedades);
+            } else if (currentTab === 'recorridos') {
+                renderizarRecorridos(recorridos);
+            }
+        }
+
+        // ============================================
+        // FUNCIÓN PARA RENDERIZAR BITÁCORAS
+        // ============================================
+        function renderizarBitacoras(bitacoras) {
+            const container = document.getElementById('bitacorasList');
+            
+            if (!bitacoras || bitacoras.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined" style="font-size:48px;">edit_note</span>
+                        <p>No hay bitácoras en el período seleccionado</p>
+                    </div>`;
+                return;
+            }
+            
+            const items = bitacoras.map(b => {
+                const fecha = b.fecha || b.created_at || '';
+                const descripcion = b.actividad || b.descripcion || 'Sin descripción';
+                
+                return `
+                    <div class="detail-list-item bitacora-item">
+                        <div class="item-header">
+                            <span class="item-badge badge-info">
+                                <span class="material-symbols-outlined" style="font-size:14px;">schedule</span>
+                                ${formatHora(fecha)}
+                            </span>
+                            <span class="item-time">${formatFechaHora(fecha)}</span>
+                        </div>
+                        <div class="item-desc">${descripcion}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = items;
+        }
+
+        // ============================================
+        // FUNCIÓN PARA RENDERIZAR NOVEDADES
+        // ============================================
+        function renderizarNovedades(novedades) {
+            const container = document.getElementById('novedadesList');
+            
+            if (!novedades || novedades.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined" style="font-size:48px;">warning</span>
+                        <p>No hay novedades en el período seleccionado</p>
+                    </div>`;
+                return;
+            }
+            
+            const items = novedades.map(n => {
+                const fecha = n.fecha || n.created_at || '';
+                const descripcion = n.descripcion || n.novedad || 'Sin descripción';
+                
+                return `
+                    <div class="detail-list-item novedad-item">
+                        <div class="item-header">
+                            <span class="item-badge badge-warning">
+                                <span class="material-symbols-outlined" style="font-size:14px;">schedule</span>
+                                ${formatHora(fecha)}
+                            </span>
+                            <span class="item-time">${formatFechaHora(fecha)}</span>
+                        </div>
+                        <div class="item-desc">${descripcion}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = items;
+        }
+
+        // ============================================
+        // FUNCIÓN PARA RENDERIZAR RECORRIDOS
+        // ============================================
+        function renderizarRecorridos(recorridos) {
+            const container = document.getElementById('recorridosList');
+            
+            if (!recorridos || recorridos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined" style="font-size:48px;">route</span>
+                        <p>No hay puntos de recorrido en el período seleccionado</p>
+                    </div>`;
+                return;
+            }
+            
+            const items = recorridos.map((r, i) => {
+                const fecha = r.fecha || r.created_at || '';
+                const punto = r.punto || 'Punto sin nombre';
+                const observacion = r.observacion || '';
+                
+                return `
+                    <div class="detail-list-item recorrido-item">
+                        <div class="item-header">
+                            <span class="item-badge badge-success">
+                                <span class="material-symbols-outlined" style="font-size:14px;">location_on</span>
+                                Punto #${i + 1}
+                            </span>
+                            <span class="item-time">${formatFechaHora(fecha)}</span>
+                        </div>
+                        <div class="item-title">${punto}</div>
+                        ${observacion ? `<div class="item-desc">${observacion}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = items;
+        }
+
+        // ============================================
+        // FUNCIÓN PARA ACTIVAR TAB
+        // ============================================
+        function activarTab(tab) {
+            currentTab = tab;
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+            document.getElementById(`pane${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+            
+            if (empleadoSeleccionado) {
+                cargarDetalleEmpleado();
+            }
+        }
+
+        // ============================================
+        // FUNCIÓN PARA LIMPIAR FILTROS
+        // ============================================
+        function limpiarFiltros() {
+            document.getElementById('filtroDesde').value = '2026-01-01';
+            document.getElementById('filtroHasta').value = '2026-12-31';
+            
+            if (empleadoSeleccionado) {
+                cargarDetalleEmpleado();
+            }
+        }
+
+        // Agregar event listeners
+        document.getElementById('filtroDesde').addEventListener('change', validarYCorregirFechas);
+        document.getElementById('filtroHasta').addEventListener('change', validarYCorregirFechas);
+
+        // Hacer funciones globales
+        window.cargarDetalleEmpleado = cargarDetalleEmpleado;
+        window.diagnosticarEmpleado = diagnosticarEmpleado;
+        window.mostrarTodosLosDatos = mostrarTodosLosDatos;
+        window.activarTab = activarTab;
+        window.limpiarFiltros = limpiarFiltros;
+
+        console.log('✅ Sistema listo');
+    </script>
+
+    <!-- CSS para el sidebar -->
+    <style>
+        .sidebar {
+            width: 300px !important;
+            min-width: 300px !important;
+            background: white;
+            border-right: 1px solid var(--gray-200);
+            padding: 1.5rem 0;
+            height: calc(100vh - 64px);
+            position: sticky;
+            top: 64px;
+            overflow-y: auto;
+            z-index: 90;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+            padding: 0 0.75rem;
+        }
+        
+        .sidebar-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gray-400);
+            padding: 0 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .sidebar-link {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 12px 16px !important;
+            margin: 4px 0 !important;
+            border-radius: 10px !important;
+            color: var(--gray-700) !important;
+            font-size: 0.9rem !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            transition: all 0.2s ease !important;
+            border-left: 3px solid transparent !important;
+        }
+        
+        .sidebar-link .material-symbols-outlined {
+            font-size: 22px !important;
+            min-width: 28px !important;
+        }
+        
+        .sidebar-link.active {
+            background: var(--primary-bg) !important;
+            color: var(--primary) !important;
+            border-left-color: var(--primary) !important;
+        }
+        
+        .sidebar-link.active .material-symbols-outlined {
+            color: var(--primary) !important;
+        }
+        
+        .sidebar-link:hover {
+            background: var(--gray-100) !important;
+        }
+        
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: -300px;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+                padding-top: 70px;
+            }
+            .sidebar.active { left: 0; }
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            .sidebar-overlay.active { display: block; }
+            .nav-hamburger { display: flex !important; }
+        }
+        
+        @media (min-width: 1025px) {
+            .nav-hamburger { display: none !important; }
+        }
+        
+        .btn-success {
+            background: var(--success) !important;
+            color: white !important;
+        }
+        .btn-warning {
+            background: var(--warning) !important;
+            color: white !important;
+        }
+    </style>
+
+</body>
+
+</html>

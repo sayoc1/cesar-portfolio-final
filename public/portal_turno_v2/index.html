@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Turnos v2 | Inicio de Sesión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #00723f;
+            --primary-dark: #004d2b;
+            --primary-light: #4caf50;
+            --bg: #f4f7f5;
+            --white: #ffffff;
+            --text: #1a1a1a;
+            --text-light: #666666;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Split Screen Layout */
+        .login-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .login-visual {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+
+        .login-visual h2 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; text-align: center; }
+        .login-visual p { font-size: 1.1rem; opacity: 0.9; text-align: center; max-width: 400px; }
+
+        .login-form-section {
+            width: 450px;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text); }
+        .subtitle { color: var(--text-light); margin-bottom: 32px; font-size: 0.95rem; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text); }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper span {
+            position: absolute;
+            left: 12px;
+            color: var(--text-light);
+            font-size: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 114, 63, 0.1);
+        }
+
+        .btn-login {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-login:hover { background: var(--primary-dark); }
+
+        @media (max-width: 900px) {
+            .login-visual { display: none; }
+            .login-form-section { width: 100%; padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-visual">
+            <span class="material-symbols-outlined" style="font-size: 80px; margin-bottom: 20px;">account_balance</span>
+            <h2>Banco Agrícola de Venezuela</h2>
+            <p>Sistema institucional para el control operativo de turnos y seguridad física.</p>
+        </div>
+        <div class="login-form-section">
+            <div class="brand-logo">
+                <span class="material-symbols-outlined">account_balance</span> BAV | PORTAL DE TURNOS
+            </div>
+            <h1>Bienvenido</h1>
+            <p class="subtitle">Ingresa tus credenciales para acceder al panel operativo.</p>
+            
+            <div class="form-group">
+                <label>Usuario</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined">person</span>
+                    <input type="text" placeholder="Ej: c.adrian">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-wrapper">
+                    <span class="material-symbols-outlined">lock</span>
+                    <input type="password" placeholder="••••••••">
+                </div>
+            </div>
+
+            <button class="btn-login" onclick="handleLogin()">Iniciar Sesión</button>
+            <button onclick="handleLogin()" style="background:transparent; border:1px solid #ddd; padding:10px; margin-top:10px; border-radius:8px; cursor:pointer; font-size:0.8rem;">Acceso Demo (Invitado)</button>
+            
+            <p style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: var(--text-light);">
+                © 2024 Banco Agrícola de Venezuela - Seguridad Informática
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin() {
+            const btn = document.querySelector('.btn-login');
+            const container = document.querySelector('.login-container');
+            
+            btn.innerText = "Validando...";
+            setTimeout(() => {
+                alert("ACCESO DEMO: El sistema ha validado las credenciales y el token JWT.\n\nEn el entorno real del Banco Agrícola de Venezuela, serías redirigido al Dashboard administrativo.");
+                window.location.reload();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>VANS x DC | OVERSIZE COLLECTION</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "stark-white": "#FFFFFF",
+              "primary": "#000000",
+              "secondary": "#A80000",
+              "action-red": "#A80000",
+              "background": "#050505",
+              "on-background": "#f9f9f9",
+              "surface": "#0a0a0a",
+              "outline": "#333333"
+            }
+          },
+        },
+      }
+    </script>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Corregimos el bloqueador eliminando la capa de sobreescritura negra fija */
+        .img-reveal {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-[#f9f9f9] antialiased overflow-x-hidden">
+
+    <div id="root"></div>
+
+    <script type="text/babel" src="app.js"></script>
+
+</body>
+</html>
