@@ -4,8 +4,8 @@ export default function Terminal() {
   const [text, setText] = useState('');
   const lines = [
     "> initializing cesar-portfolio...",
-    "> loading fullstack_modules...",
-    "> backend: php/laravel active",
+    "> loading frontend_modules...",
+    "> react & tailwind active",
     "> status: system_online_ "
   ];
   const fullText = lines.join('\n');
