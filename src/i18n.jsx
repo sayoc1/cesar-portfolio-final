@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const translations = {
+export const translations = {
   es: {
     nav: { home: 'INICIO', experience: 'EXPERIENCIA', education: 'ESTUDIOS', projects: 'PROYECTOS', skills: 'HABILIDADES', contact: 'CONTACTO' },
     hero: {
@@ -32,13 +32,13 @@ const translations = {
           ]
         },
         {
-          title: 'Frontend Developer (Anteriormente Specialist)',
+          title: 'Especialista en Sistemas Bancarios',
           company: 'Banco Agrícola de Venezuela',
           period: 'Agosto 2021 – Agosto 2023',
           points: [
-            'Optimización del Rendimiento del Lado del Cliente (Client-Side): Reestructuré interfaces heredadas aplicando principios de código limpio y optimización lógica, logrando flujos web mucho más rápidos ante escenarios de alta concurrencia.',
-            'Diseño Orientado a Datos: Colaboré estrechamente con el equipo de bases de datos para estructurar el renderizado dinámico de grandes volúmenes de paquetes informáticos, reduciendo la latencia de pintado de tablas y reportes interactivos complejos en pantalla.',
-            'Tolerancia a Fallos en Interfaz: Desarrollé componentes frontend modulares bajo metodologías de tolerancia a fallos, implementando un control avanzado de excepciones visuales para que el usuario nunca experimente pantallas congeladas ante caídas del servidor.'
+            'Especialista en Servidores y Cierres Bancarios: Ejecución y monitoreo de procesos de cierre operativo diario y mensual a través de la consola AS/400 (IBM iSeries), garantizando la integridad de los datos financieros.',
+            'Mantenimiento de Infraestructura Crítica: Soporte técnico y mantenimiento preventivo de servidores bancarios de alto rendimiento para asegurar la continuidad operativa del negocio.',
+            'Gestión de Operaciones de Misión Crítica: Resolución de incidencias técnicas en sistemas centrales y supervisión de tareas de procesamiento en lotes (Batch processing) en entornos de alta seguridad.'
           ]
         },
         {
@@ -84,22 +84,6 @@ const translations = {
           preview: '/certificados/logica-programacion-preview.png'
         },
         {
-          title: 'Spring Boot (Seguridad & Buenas Prácticas)',
-          institution: 'Alura',
-          date: '2024',
-          type: 'Certificación',
-          certificate: '/certificados/springboot-security.pdf',
-          preview: '/certificados/springboot-security-preview.png'
-        },
-        {
-          title: 'Creando tu primera API (Java)',
-          institution: 'Alura',
-          date: '2023',
-          type: 'Certificación',
-          certificate: '/certificados/java-api.pdf',
-          preview: '/certificados/java-api-preview.png'
-        },
-        {
           title: 'Git y GitHub (Control de versiones)',
           institution: 'Alura',
           date: '2023',
@@ -143,10 +127,10 @@ const translations = {
     techstack: {
       title: 'Stack Técnico',
       heading: 'Dominio de tecnologías modernas y sistemas críticos.',
-      paragraph: 'Un stack tecnológico versátil diseñado para la construcción de sistemas escalables. Mi enfoque integra el desarrollo de interfaces modernas de alto rendimiento con una lógica de backend robusta, garantizando siempre la eficiencia, la seguridad y la mantenibilidad del código en cada proyecto.',
+      paragraph: 'Especializado en el ecosistema moderno de JavaScript. Mi stack está enfocado en la creación de interfaces de alto rendimiento, escalables y visualmente impactantes, utilizando React y Vue.js como pilares principales. Aporto un criterio técnico superior gracias a mi experiencia en entornos de alta concurrencia y seguridad bancaria.',
       frontend: 'Frontend',
-      backend: 'Backend',
-      devops: 'DevOps & Herramientas',
+      backend: 'Backend & Database',
+      devops: 'Tools & DevOps',
     },
     contact: {
       title: 'Contacto',
@@ -192,13 +176,13 @@ const translations = {
           ]
         },
         {
-          title: 'Frontend Developer (Formerly Specialist)',
+          title: 'Banking Systems Specialist',
           company: 'Agricultural Bank of Venezuela',
           period: 'August 2021 – August 2023',
           points: [
-            'Client-Side Performance Optimization: Restructured legacy interfaces applying clean code principles and logic optimization, achieving significantly faster web flows in high-concurrency scenarios.',
-            'Data-Oriented Design: Collaborated closely with the database team to structure dynamic rendering of large data volumes, reducing paint latency for complex interactive tables and reports.',
-            'Interface Fault Tolerance: Developed modular frontend components using fault-tolerant methodologies, implementing advanced visual exception handling to prevent frozen screens during server outages.'
+            'Banking Servers and Closures Specialist: Execution and monitoring of daily and monthly operational closing processes through the AS/400 console (IBM iSeries), ensuring financial data integrity.',
+            'Critical Infrastructure Maintenance: Technical support and preventive maintenance of high-performance banking servers to guarantee business operational continuity.',
+            'Mission-Critical Operations Management: Technical incident resolution in central systems and supervision of batch processing tasks in high-security environments.'
           ]
         },
         {
@@ -242,6 +226,14 @@ const translations = {
           type: 'Certification',
           certificate: '/certificados/logica-programacion.pdf',
           preview: '/certificados/logica-programacion-preview.png'
+        },
+        {
+          title: 'Git and GitHub (Version Control)',
+          institution: 'Alura',
+          date: '2023',
+          type: 'Certification',
+          certificate: '/certificados/git-github.pdf',
+          preview: '/certificados/git-github-preview.png'
         }
       ]
     },
@@ -279,10 +271,10 @@ const translations = {
     techstack: {
       title: 'Technical Stack',
       heading: 'Mastery of modern technologies and critical systems.',
-      paragraph: 'A versatile toolkit ranging from current web development to the robustness of banking architecture.',
+      paragraph: 'Specialized in the modern JavaScript ecosystem. My stack is focused on creating high-performance, scalable, and visually stunning interfaces, using React and Vue.js as main pillars. I bring superior technical judgment thanks to my experience in high-concurrency and banking security environments.',
       frontend: 'Frontend',
-      backend: 'Backend',
-      devops: 'DevOps & Tools',
+      backend: 'Backend & Database',
+      devops: 'Tools & DevOps',
     },
     contact: {
       title: 'Contact',
@@ -303,18 +295,20 @@ const LanguageContext = createContext({ lang: 'es', setLang: () => {} });
 
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState('es');
+  // Obtenemos las traducciones según el idioma actual
+  const t = translations[lang];
 
-  // AGREGA 'translations' AL VALUE AQUÍ:
   return (
-    <LanguageContext.Provider value={{ lang, setLang, translations }}>
+    <LanguageContext.Provider value={{ lang, setLang, translations, t }}>
       {children}
     </LanguageContext.Provider>
   );
 }
 
 export function useLang() {
-  return useContext(LanguageContext);
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLang debe usarse dentro de un LanguageProvider');
+  }
+  return context;
 }
-
-export { translations };
-export default translations;

@@ -18,9 +18,9 @@ export default function TechAndContact() {
           <div className="md:col-span-2 grid gap-6 md:grid-cols-2">
             <div className="glass-card rounded-[2rem] p-6 border border-white/10">
               <h3 className="text-lg font-semibold mb-3 text-primary-container">{ts.frontend}</h3>
-              <p className="text-sm text-gray-300 mb-4">Desarrollo de interfaces modernas y dinámicas con enfoque en UX.</p>
+              <p className="text-sm text-gray-300 mb-4">{lang === 'es' ? 'Desarrollo de interfaces modernas y dinámicas con enfoque en UX.' : 'Development of modern and dynamic interfaces with focus on UX.'}</p>
               <ul className="flex flex-wrap gap-2">
-                {['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Tailwind'].map(s => (
+                {['HTML', 'CSS', 'JavaScript', 'React', 'Vue.js'].map(s => (
                   <li key={s} className="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 text-on-surface-variant">{s}</li>
                 ))}
               </ul>
@@ -28,18 +28,18 @@ export default function TechAndContact() {
 
             <div className="glass-card rounded-[2rem] p-6 border border-white/10">
               <h3 className="text-lg font-semibold mb-3 text-primary-container">{ts.backend}</h3>
-              <p className="text-sm text-gray-300 mb-4">Arquitecturas empresariales y sistemas bancarios de alto rendimiento.</p>
+              <p className="text-sm text-gray-300 mb-4">{lang === 'es' ? 'Soluciones robustas y escalables para el procesamiento de datos.' : 'Robust and scalable solutions for data processing.'}</p>
               <ul className="flex flex-wrap gap-2">
-                {['Java', 'Spring Boot', 'Python', 'Django', 'COBOL'].map(s => (
+                {['PHP', 'Laravel', 'Python'].map(s => (
                   <li key={s} className="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 text-on-surface-variant">{s}</li>
                 ))}
               </ul>
             </div>
             <div className="glass-card rounded-[2rem] p-6 border border-white/10">
-              <h3 className="text-lg font-semibold mb-3 text-primary-container">Base de Datos</h3>
-              <p className="text-sm text-gray-300 mb-4">Gestión eficiente de datos y modelado relacional bancario.</p>
+              <h3 className="text-lg font-semibold mb-3 text-primary-container">{lang === 'es' ? 'Base de Datos' : 'Database'}</h3>
+              <p className="text-sm text-gray-300 mb-4">{lang === 'es' ? 'Gestión eficiente de datos y modelado relacional.' : 'Efficient data management and relational modeling.'}</p>
               <ul className="flex flex-wrap gap-2">
-                {['MySQL', 'SQL Server', 'SQL'].map(s => (
+                {['MySQL'].map(s => (
                   <li key={s} className="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 text-on-surface-variant">{s}</li>
                 ))}
               </ul>
@@ -47,9 +47,9 @@ export default function TechAndContact() {
 
             <div className="glass-card rounded-[2rem] p-6 border border-white/10">
               <h3 className="text-lg font-semibold mb-3 text-primary-container">{ts.devops}</h3>
-              <p className="text-sm text-gray-300 mb-4">Herramientas esenciales para la integración y despliegue de software.</p>
+              <p className="text-sm text-gray-300 mb-4">{lang === 'es' ? 'Herramientas esenciales para el control y despliegue de software.' : 'Essential tools for software control and deployment.'}</p>
               <ul className="flex flex-wrap gap-2">
-                {['Git', 'GitHub', 'Docker', 'Anydesk', 'Rustdesk'].map(s => (
+                {['Git', 'GitHub', 'Docker'].map(s => (
                   <li key={s} className="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 text-on-surface-variant">{s}</li>
                 ))}
               </ul>
@@ -83,10 +83,8 @@ export default function TechAndContact() {
             <div className="mt-10 flex flex-col gap-3">
               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vermilion.onnn@gmail.com" target="_blank" rel="noopener noreferrer" className="bg-primary-container text-on-primary-container font-bold px-6 py-3 rounded-xl text-center active:scale-95 transition-transform">{t.send}</a>
               <a
-                href="/certificados/CV_2026__1_.pdf"
-                download="CV_ASH_DEV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/cesar%20adrian%20frontend.pdf"
+                download="cesar adrian frontend.pdf"
                 className="border border-outline-variant text-on-surface px-6 py-3 rounded-xl text-center hover:bg-white/5 transition-colors"
               >
                 {t.cv}

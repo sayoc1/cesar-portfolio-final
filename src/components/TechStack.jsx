@@ -1,21 +1,21 @@
-﻿import React from 'react';
+﻿﻿import React from 'react';
 import { useLang, translations } from '../i18n.jsx';
 
 const stacksTemplate = [
   {
     key: 'frontend',
     icon: 'code',
-    skills: ['HTML', 'CSS', 'JavaScript', 'React'],
+    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Vue.js'],
   },
   {
     key: 'backend',
     icon: 'storage',
-    skills: ['Java', 'Spring Boot', 'Python', 'Django', 'COBOL'],
+    skills: ['PHP', 'Laravel', 'Python', 'MySQL'],
   },
   {
     key: 'devops',
     icon: 'terminal',
-    skills: ['Git & GitHub', 'Docker', 'MySQL'],
+    skills: ['Git', 'GitHub', 'Docker'],
   },
 ];
 export default function TechStack() {

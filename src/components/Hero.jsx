@@ -1,4 +1,4 @@
-﻿﻿import React from 'react';
+﻿﻿﻿﻿import React from 'react';
 import { useLang, translations } from '../i18n.jsx';
 import Terminal from './Terminal';
 import fotoCesar from '../../img/foto-cesar.jpeg';
@@ -25,8 +25,15 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-6">
-          <a className="bg-primary-container text-on-primary-container font-semibold px-10 py-4 rounded-lg transition-transform active:scale-95 hover:shadow-[0_0_20px_-5px_rgba(0,255,67,0.6)] text-center" href="#experience">{t.viewWork}</a>
-          <a className="border border-outline-variant text-on-surface px-10 py-4 rounded-lg transition-all hover:bg-surface-variant/20 hover:border-primary-container active:scale-95 text-center" href="https://mail.google.com/mail/?view=cm&fs=1&to=vermilion.onnn@gmail.com" target="_blank" rel="noopener noreferrer">{t.contact}</a>
+          <a className="bg-primary-container text-on-primary-container font-semibold px-8 py-4 rounded-lg transition-transform active:scale-95 hover:shadow-[0_0_20px_-5px_rgba(0,255,67,0.6)] text-center" href="#experience">{t.viewWork}</a>
+          <a 
+            className="border border-primary-container/30 text-primary-container font-semibold px-8 py-4 rounded-lg transition-all hover:bg-primary-container/10 active:scale-95 text-center" 
+            href="/cesar%20adrian%20frontend.pdf" 
+            download="cesar adrian frontend.pdf"
+          >
+            {translations[lang].contact.cv}
+          </a>
+          <a className="border border-outline-variant text-on-surface px-8 py-4 rounded-lg transition-all hover:bg-surface-variant/20 active:scale-95 text-center" href="https://mail.google.com/mail/?view=cm&fs=1&to=vermilion.onnn@gmail.com" target="_blank" rel="noopener noreferrer">{t.contact}</a>
         </div>
       </section>
 

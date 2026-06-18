@@ -5,7 +5,7 @@ export default function Terminal() {
   const lines = [
     "> initializing cesar-portfolio...",
     "> loading fullstack_modules...",
-    "> backend: java/spring_boot active",
+    "> backend: php/laravel active",
     "> status: system_online_ "
   ];
   const fullText = lines.join('\n');
