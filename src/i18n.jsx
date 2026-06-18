@@ -6,38 +6,49 @@ const translations = {
     hero: {
       badge: 'Si lo puedes soñar lo puedes programar',
       greeting: '¡Hola! , Soy',
-      name: 'César',
-      subtitle: 'Software Developer | Fullstack & Backend Architect',
-      paragraph: 'Enfocado en crear interfaces de usuario dinámicas, rápidas e intuitivas. Experto en el desarrollo frontend moderno con React y Tailwind CSS. Comprometido con la creación de experiencias web de alto rendimiento, escalables y visualmente impactantes.',
+      name: 'César Alejandro',
+      subtitle: 'Frontend Developer',
+      paragraph: 'Creo interfaces interactivas y escalables, transformando ideas en MVPs y productos SaaS mediante React y Vue.js.',
       viewWork: 'Ver Mi Trabajo',
       contact: 'Gmail',
       aboutTitle: 'Sobre Mí',
-      aboutP1: 'Desarrollador Fullstack apasionado por la ingeniería de software y la eficiencia operativa. Mi enfoque combina la creación de interfaces modernas y dinámicas con React, con el desarrollo de backends robustos y escalables utilizando Java, PHP y Python.',
-      aboutP2: 'Cuento con una sólida experiencia resolviendo problemas complejos mediante arquitecturas limpias y seguras. Mi stack técnico incluye HTML, CSS, JavaScript, React, Vue.js, Git, Docker y MySQL. También he usado COBOL en entornos bancarios, y estoy comprometido con la excelencia técnica y el desarrollo de soluciones digitales que optimizan procesos y elevan la experiencia del usuario.',
+      aboutP1: 'Soy un Desarrollador Frontend enfocado en el ecosistema moderno de JavaScript. Me especializo en construir aplicaciones web dinámicas con React y Vue.js, priorizando el rendimiento en el navegador, la arquitectura limpia de componentes y experiencias de usuario excepcionales.',
+      aboutP2: 'Mi background en el sector bancario me ha dado una alta disciplina para asegurar que la lógica en el cliente sea óptima, consuma APIs de forma eficiente y mantenga la fluidez ante flujos de datos masivos.',
     },
     experience: {
       title: 'Experiencia',
-      heading: 'Trayectoria profesional en sistemas y soporte crítico.',
-      paragraph: 'Trabajo orientado a mantener operaciones estables en entornos financieros, con especialidad en backend bancario e infraestructura de alto rendimiento.',
+      heading: 'Experiencia Profesional (Trayecto Técnico)',
+      paragraph: 'Especialista en el desarrollo de interfaces modernas y escalables, con un fuerte enfoque en la optimización del rendimiento y la experiencia del usuario en el sector financiero.',
       items: [
         {
-          title: 'Técnico Especializado en Sistemas Bancarios',
+          title: 'Frontend Developer',
           company: 'Banco Agrícola de Venezuela',
-          period: '2024 - Actualidad',
+          period: 'Agosto 2023 – Marzo 2026',
           points: [
-            'Mantenimiento de servidores bancarios críticos y AS/400.',
-            'Ejecución de cierres operativos y optimización de programas COBOL.',
-            'Resolución de incidencias de red y soporte técnico.'
+            'Desarrollo End-to-End del Sistema de Gestión de Guardias: Lideré la arquitectura del frontend y el diseño de la interfaz de usuario para una solución web modular interna; implementé componentes dinámicos e intuitivos que automatizaron la asignación de roles técnicos, eliminando procesos manuales.',
+            'Consumo de APIs y Renderizado Eficiente: Diseñé e integré la lógica de consumo para microservicios y APIs REST de conciliación de datos financieros, optimizando la velocidad de carga de la interfaz, el manejo de estados complejos y asegurando la integridad de los flujos de información en tiempo real.',
+            'Construcción de Interfaces Transaccionales (MVPs): Conceptualicé y maqueté interfaces web dinámicas de alta disponibilidad utilizando React, Vue.js y Tailwind CSS, garantizando un diseño responsivo adaptado a flujos operativos exigentes.',
+            'Control de Versiones y Despliegue Estándar: Autogestioné todo el ciclo de vida del frontend utilizando Git y GitHub para el control de versiones, implementando contenedores con Docker para asegurar entornos de ejecución limpios y replicables en producción.'
           ]
         },
         {
-          title: 'Soporte Técnico e Infraestructura',
-          company: 'Wiken-Cop',
-          period: '2016 - 2025',
+          title: 'Frontend Developer (Anteriormente Specialist)',
+          company: 'Banco Agrícola de Venezuela',
+          period: 'Agosto 2021 – Agosto 2023',
           points: [
-            'Diagnóstico y resolución de problemas de hardware/software.',
-            'Elaboración de informes de gestión tecnológica.',
-            'Despliegue de equipos críticos a nivel nacional.'
+            'Optimización del Rendimiento del Lado del Cliente (Client-Side): Reestructuré interfaces heredadas aplicando principios de código limpio y optimización lógica, logrando flujos web mucho más rápidos ante escenarios de alta concurrencia.',
+            'Diseño Orientado a Datos: Colaboré estrechamente con el equipo de bases de datos para estructurar el renderizado dinámico de grandes volúmenes de paquetes informáticos, reduciendo la latencia de pintado de tablas y reportes interactivos complejos en pantalla.',
+            'Tolerancia a Fallos en Interfaz: Desarrollé componentes frontend modulares bajo metodologías de tolerancia a fallos, implementando un control avanzado de excepciones visuales para que el usuario nunca experimente pantallas congeladas ante caídas del servidor.'
+          ]
+        },
+        {
+          title: 'Frontend Web Developer (Remoto)',
+          company: 'Wikencop',
+          period: 'Marzo 2016 – Septiembre 2024',
+          points: [
+            'Desarrollo y Soporte de Plataformas Corporativas: Dirigí de manera autónoma y 100% remota la evolución de interfaces en portales internos de la compañía, resolviendo de manera integral incidencias visuales críticas y adaptando los flujos funcionales.',
+            'Análisis de Métricas Web y UX: Evalué de forma constante el rendimiento técnico de los componentes distribuidos en el navegador para elaborar mejoras de usabilidad (UI/UX), reduciendo tiempos de interacción del cliente.',
+            'Evolución Tecnológica y consistencia: Mantuve un compromiso continuo de más de 8 años adaptando interfaces clásicas a metodologías y herramientas modernas de JavaScript (ES6+), asegurando estándares web actualizados.'
           ]
         }
       ]
@@ -155,38 +166,49 @@ const translations = {
     hero: {
       badge: 'If you can dream it you can program it',
       greeting: "Hi! , I'm",
-      name: 'César',
-      subtitle: 'Software Developer | Fullstack & Backend Architect',
-      paragraph: 'Focused on building high-performance applications using Java, PHP, and Python. Skilled in version control, Docker deployment, and MySQL database management. Committed to code quality and stability in banking systems.',
+      name: 'César Alejandro',
+      subtitle: 'Frontend Developer',
+      paragraph: 'I build interactive and scalable interfaces, transforming ideas into MVPs and SaaS products using React and Vue.js.',
       viewWork: 'View My Work',
       contact: 'Gmail',
       aboutTitle: 'About Me',
-      aboutP1: 'Fullstack developer passionate about software engineering and operational efficiency. Skilled at building modern interfaces with React and powerful backends in Java and PHP. With a strong foundation in banking systems and professional methodologies, I specialize in transforming complex problems into scalable, secure, and maintainable applications.',
-      aboutP2: 'I work with technologies such as HTML, CSS, JavaScript, React, Vue.js, Git, GitHub, Docker, MySQL, and PHP. On the backend, I also build reliable Python solutions to support critical business processes.',
+      aboutP1: 'I am a Frontend Developer focused on the modern JavaScript ecosystem. I specialize in building dynamic web applications with React and Vue.js, prioritizing browser performance, clean component architecture, and exceptional user experiences.',
+      aboutP2: 'My background in the banking sector has given me the discipline to ensure client-side logic is optimal, consumes APIs efficiently, and maintains responsiveness under heavy data loads.',
     },
     experience: {
       title: 'Experience',
-      heading: 'Professional career in systems and critical support.',
-      paragraph: 'Work oriented towards maintaining stable operations in financial environments, specializing in banking backend.',
+      heading: 'Professional Experience (Technical Journey)',
+      paragraph: 'Specialist in developing modern, scalable interfaces with a strong focus on performance optimization and user experience within the financial sector.',
       items: [
         {
-          title: 'Banking Systems Specialist',
+          title: 'Frontend Developer',
           company: 'Agricultural Bank of Venezuela',
-          period: '2024 - Present',
+          period: 'August 2023 – March 2026',
           points: [
-            'Maintenance of critical banking servers and AS/400 systems.',
-            'Execution of operational closings and COBOL optimization.',
-            'Network incident resolution and technical support.'
+            'End-to-End Development of the Guard Management System: Led frontend architecture and UI design for a modular internal web solution; implemented intuitive dynamic components that automated technical role assignment, eliminating manual processes.',
+            'API Consumption and Efficient Rendering: Designed and integrated consumption logic for microservices and financial data reconciliation REST APIs, optimizing interface load speed, complex state management, and ensuring real-time data flow integrity.',
+            'Transactional Interface Construction (MVPs): Conceptualized and prototyped high-availability dynamic web interfaces using React, Vue.js, and Tailwind CSS, guaranteeing responsive design adapted to demanding operational flows.',
+            'Version Control and Standard Deployment: Self-managed the full frontend lifecycle using Git and GitHub for version control, implementing Docker containers to ensure clean and replicable execution environments in production.'
           ]
         },
         {
-          title: 'Technical Support & Infrastructure',
-          company: 'Wiken-Cop',
-          period: '2016 - 2025',
+          title: 'Frontend Developer (Formerly Specialist)',
+          company: 'Agricultural Bank of Venezuela',
+          period: 'August 2021 – August 2023',
           points: [
-            'Hardware/software troubleshooting and diagnosis.',
-            'Management of technological infrastructure reports.',
-            'Deployment of critical equipment nationwide.'
+            'Client-Side Performance Optimization: Restructured legacy interfaces applying clean code principles and logic optimization, achieving significantly faster web flows in high-concurrency scenarios.',
+            'Data-Oriented Design: Collaborated closely with the database team to structure dynamic rendering of large data volumes, reducing paint latency for complex interactive tables and reports.',
+            'Interface Fault Tolerance: Developed modular frontend components using fault-tolerant methodologies, implementing advanced visual exception handling to prevent frozen screens during server outages.'
+          ]
+        },
+        {
+          title: 'Frontend Web Developer (Remote)',
+          company: 'Wikencop',
+          period: 'March 2016 – September 2024',
+          points: [
+            'Development and Support of Corporate Platforms: Managed the evolution of internal portal interfaces autonomously and 100% remotely, resolving critical visual incidents and adapting functional flows.',
+            'Web Metrics and UX Analysis: Constantly evaluated technical performance of browser-distributed components to develop UI/UX improvements, reducing customer interaction times.',
+            'Technological Evolution and Consistency: Maintained a continuous 8-year commitment adapting legacy interfaces to modern JavaScript (ES6+) methodologies and tools, ensuring up-to-date web standards.'
           ]
         }
       ]
