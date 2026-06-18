@@ -13,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     // Esto cambia el título que aparece en la pestaña del navegador
-    document.title = "Cesar Adrian | " + (lang === 'es' ? "Portafolio 💻" : "Portfolio 💻");
+    document.title = "Cesar Adrian | " + (lang === 'es' ? "Portafolio Frontend 💻" : "Frontend Portfolio 💻");
   }, [lang]);
 
   return (
