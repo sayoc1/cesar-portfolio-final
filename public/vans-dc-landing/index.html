@@ -36,6 +36,13 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+      Babel.registerPreset('custom-react', {
+        presets: [
+          [Babel.availablePresets['react'], { runtime: 'classic' }]
+        ]
+      });
+    </script>
 
     <style>
         .material-symbols-outlined {
@@ -60,7 +67,7 @@
     <div id="root"></div>
 
     <!-- Inyectamos el código de React directamente para evitar bloqueos de rutas en Vercel -->
-    <script type="text/babel">
+    <script type="text/babel" data-presets="custom-react">
         // Desestructuramos los hooks que necesitamos de React (vía CDN global)
         const { useState, useRef, useEffect } = React;
 
