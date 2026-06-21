@@ -9,7 +9,8 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="./styles.css">
 
     <script id="tailwind-config">
       tailwind.config = {
@@ -31,6 +32,7 @@
       }
     </script>
 
+    <!-- Cargamos las librerías de React y Babel -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -46,7 +48,6 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        /* Corregimos el bloqueador eliminando la capa de sobreescritura negra fija */
         .img-reveal {
             position: relative;
             overflow: hidden;
@@ -55,9 +56,31 @@
 </head>
 <body class="bg-[#050505] text-[#f9f9f9] antialiased overflow-x-hidden">
 
+    <!-- Contenedor único de React -->
     <div id="root"></div>
 
-    <script type="text/babel" src="app.js"></script>
+    <!-- Inyectamos el código de React directamente para evitar bloqueos de rutas en Vercel -->
+    <script type="text/babel">
+        
+        // ==========================================
+        //  ABRE TU ARCHIVO 'app.js', COPIA TODO SU 
+        //  CONTENIDO Y PÉGALO JUSTO AQUÍ ABAJO:
+        // ==========================================
 
+        // Ejemplo de la estructura que debe tener:
+        /*
+        function App() {
+            return (
+                <div className="min-h-screen flex items-center justify-center">
+                    <h1 className="text-4xl font-bold text-secondary">VANS x DC</h1>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+        */
+
+    </script>
 </body>
 </html>
